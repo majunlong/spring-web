@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:webservice="http://www.springframework.org/schema/web-services"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.2.xsd
+	http://www.springframework.org/schema/oxm
+	http://www.springframework.org/schema/oxm/spring-oxm-4.2.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+	http://www.springframework.org/schema/web-services
+	http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+	http://www.springframework.org/schema/websocket
+	http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+	<task:executor id="myExecutor" pool-size="5"/>
+	<task:scheduler id="myScheduler" pool-size="10"/>
+	<task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	<context:component-scan base-package="com.web.socket.controller;com.web.controller;com.web.dao;"/>
+	<!-- 路径跳转 -->
+	<mvc:view-controller path="/" view-name="/index" status-code="200"/>
+	<mvc:view-controller path="/index" view-name="/index" status-code="200"/>
+	<!-- 静态资源映射 -->
+	<mvc:resources mapping="/resource/**" location="/WEB-INF/_resource/" cache-period="31536000"/>
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<bean class="com.web.support.interceptor.CustomHandlerInterceptor"/>
+	</mvc:interceptors>
+	<!-- 异常解析器 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionAttribute" value="error"/>
+		<property name="defaultErrorView" value="/error/index"/>    
+	    <property name="defaultStatusCode" value="500"/>    
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">/error/index</prop>
+				<prop key="com.web.support.exception.NotLoginedException">/index</prop>
+				<prop key="org.springframework.web.bind.ServletRequestBindingException">/error/index</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 自定义视图 -->
+	<bean id="customView" class="com.web.support.view.CustomView"/>
+	<!-- 自定义视图的解析器-->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="1"/>
+	</bean>
+	<!-- 默认视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2"/>
+		<property name="prefix" value="/WEB-INF/jsp"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	<!-- 自定义类型转换器 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<!-- <bean class="com.mvc.component.converter.CustomConverter"/> -->
+			</set>
+		</property>
+	</bean>
+	<!-- 文件解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="maxUploadSize" value="2147483648"/>
+		<property name="maxInMemorySize" value="40960"/> 
+	</bean>
+	<!-- websocket配置 -->
+	<websocket:message-broker application-destination-prefix="/app">
+		<websocket:transport send-timeout="15000" send-buffer-size="8388608" message-size="1048576"/>
+		<websocket:stomp-endpoint path="/join">
+			<websocket:handshake-interceptors>
+				<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+				<ref bean="sessionRepositoryInterceptor"/>
+				<bean class="com.web.support.interceptor.CustomHandshakeInterceptor"/>
+			</websocket:handshake-interceptors>
+			<websocket:sockjs/>
+		</websocket:stomp-endpoint>
+		<websocket:simple-broker prefix="/topic, /queue"/>
+		<websocket:client-inbound-channel>
+			<websocket:interceptors>
+				<bean class="com.web.support.interceptor.CustomChannelInterceptor"/>
+			</websocket:interceptors>
+		</websocket:client-inbound-channel>
+		<websocket:broker-channel>
+			<websocket:interceptors>
+				<ref bean="sessionRepositoryInterceptor"/>
+			</websocket:interceptors>
+		</websocket:broker-channel>
+	</websocket:message-broker>
+</beans>

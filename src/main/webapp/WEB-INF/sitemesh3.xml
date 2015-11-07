@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sitemesh>
+	<!--装饰路径-->
+	<mapping path="/*" decorator="/WEB-INF/decorator.jsp"/>
+	<!--排除路径-->
+	<mapping path="/resource/*" exclue="true"/>
+</sitemesh>

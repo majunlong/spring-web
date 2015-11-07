@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://entity.web.com/" elementFormDefault="unqualified" targetNamespace="http://entity.web.com/" version="1.0">
+	<xs:element name="Department" type="tns:Department"/>
+	<xs:element name="Employee" type="tns:Employee"/>
+	<xs:complexType name="Department">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Employee" >
+		<xs:sequence>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="gender" type="http://model.web.com/:Gender"/>
+			<xs:element name="birthday" type="xs:date"/>
+			<xs:element name="salary" type="xs:double"/>
+			<xs:element name="department" type="tns:Department"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,154 @@
+@CHARSET "UTF-8";
+
+body {
+	border: 0;
+	background: #FFF;
+}
+
+a:link {
+	color: blue;
+	text-decoration: none;
+}
+
+a:visited {
+	color: blue;
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+a:active {
+	color: blue;
+	text-decoration: none;
+}
+
+table, div.table {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	vertical-align: middle;
+	text-align: center;
+	display: table;
+}
+
+thead td {
+	border-bottom: 1px solid #000;
+}
+
+tfoot td {
+	border-top: 1px solid #000;
+}
+
+form {
+	width: 100%;
+	float: left;
+}
+
+label.save {
+	margin: 5px 0 5px 0;
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	text-align: right;
+	display: inline-table;
+}
+
+span.save {
+	margin: 5px 0 5px 0;
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	text-align: left;
+	font-size: 12px;
+	color: red;
+	display: inline-table;
+}
+
+input.save {
+	margin: 5px 0 5px 0;
+	padding: 5px;
+	border: 1px solid #000;
+	width: 188px;
+	height: 18px;
+}
+
+select.save {
+	margin: 5px 0 5px 0;
+	padding: 5px;
+	border: 1px solid #000;
+	width: 200px;
+	height: 30px;
+}
+
+a.save {
+	margin: 5px 0 5px 0;
+	padding: 5px;
+	width: 38px;
+	height: 18px;
+	line-height: 18px;
+	color: #000;
+	border: 1px solid #000;
+	background: #FFF;
+	display: inline-table;
+	background: #FFF;
+	border: 1px solid #000;
+}
+
+.list {
+	margin: 15px 5px 10px 5px;
+	padding: 5px;
+	border: 1px solid #999;
+	width: 150px;
+	height: 30px;
+	background: #FFF;
+}
+
+input.list {
+	width: 138px;
+	height: 18px;
+}
+
+a.pageNumber, a.pageSize {
+	margin: 5px;
+	width: 25px;
+	height: 25px;
+	font-size: 75%;
+	line-height: 25px;
+	border-radius: 20px 20px 20px 20px;
+	display: inline-block;
+	color: #FFF;
+	background-color: #000;
+	border: 1px solid #AAA;
+}
+
+a.pageNumber:hover, a.pageSize:hover {
+	color: #000;
+	background-color: #FFF;
+}
+
+a.playPage {
+	margin: 5px;
+	width: 25px;
+	height: 25px;
+	font-size: 75%;
+	line-height: 25px;
+	border-radius: 20px 20px 20px 20px;
+	display: inline-block;
+	border: 1px solid #AAA;
+	color: #FFF;
+	background-color: #000;
+}
+
+a.playPage:hover {
+	color: #FFF;
+	background-color: #000;
+}
+
+a.pageNumberSelected, a.pageSizeSelected {
+	color: #000;
+	background-color: #FFF;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://model.web.com/" elementFormDefault="unqualified" targetNamespace="http://model.web.com/" version="1.0">
+	<xs:element name="Gender" type="tns:Gender"/>
+	<xs:element name="Department" type="tns:Department"/>
+	<xs:element name="Employee" type="tns:Employee"/>
+	<xs:element name="Result" type="tns:Result"/>
+	<xs:simpleType name="Gender">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="MALE"/>
+            <xs:enumeration value="FEMALE"/>
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:complexType name="Department">
+		<xs:all>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="Employee">
+		<xs:all>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="gender" type="tns:Gender"/>
+			<xs:element name="birthday" type="xs:dateTime"/>
+			<xs:element name="email" type="xs:string"/>
+			<xs:element name="salary" type="xs:double"/>
+			<xs:element name="department" type="tns:Department"/>
+		</xs:all>
+	</xs:complexType>
+    <xs:complexType name="Result">
+		<xs:all>
+			<xs:element name="result" type="xs:boolean"/>
+		</xs:all>
+    </xs:complexType>
+</xs:schema>

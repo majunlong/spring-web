@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:webservice="http://www.springframework.org/schema/web-services"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.2.xsd
+	http://www.springframework.org/schema/oxm
+	http://www.springframework.org/schema/oxm/spring-oxm-4.2.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+	http://www.springframework.org/schema/web-services
+	http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+	http://www.springframework.org/schema/websocket
+	http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+	<!-- session管理 -->
+	<bean id="mapSessionRepository" class="org.springframework.session.MapSessionRepository">
+		<property name="defaultMaxInactiveInterval" value="180"/>
+	</bean>
+	<bean id="sessionRepositoryInterceptor" class="org.springframework.session.web.socket.server.SessionRepositoryMessageInterceptor">
+		<constructor-arg ref="mapSessionRepository"/>
+	</bean>
+	<bean id="springSessionRepositoryFilter" class="org.springframework.session.web.http.SessionRepositoryFilter">
+		<constructor-arg ref="mapSessionRepository"/>
+	</bean>
+<!--
+	<bean class="org.springframework.session.web.http.HeaderHttpSessionStrategy"/>
+	<bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"/>
+	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+		<property name="maxInactiveIntervalInSeconds" value="1800"/>
+	</bean>
+-->
+</beans>
